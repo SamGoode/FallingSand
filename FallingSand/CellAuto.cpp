@@ -117,16 +117,16 @@ int CellAuto::getNeighboursAlive(pos gridPos) {
 //by rewriting the logic here, I can reproduce any kind of cellular automata
 //including falling sand
 void CellAuto::updateCells() {
-    bool** newCells;
-    newCells = new bool* [height];
-    for (int i = 0; i < height; i++) {
-        newCells[i] = new bool[width];
-        for (int j = 0; j < width; j++) {
-            newCells[i][j] = false;
-        }
-    }
+    //bool** newCells;
+    //newCells = new bool* [height];
+    //for (int i = 0; i < height; i++) {
+    //    newCells[i] = new bool[width];
+    //    for (int j = 0; j < width; j++) {
+    //        newCells[i][j] = false;
+    //    }
+    //}
 
-    for (int i = 0; i < height; i++) {
+    for (int i = height - 1; i >= 0; i--) {
         for (int j = 0; j < width; j++) {
             if (!cells[i][j]) {
                 continue;
@@ -145,35 +145,35 @@ void CellAuto::updateCells() {
             //}
 
             if (getCellState({ j, i + 1 }) == -1) {
-                newCells[i][j] = true;
+                //cells[i][j] = true;
                 continue;
             }
             
             if (getCellState({ j, i + 1 }) == 0) {
-                newCells[i + 1][j] = true;
+                cells[i][j] = false;
+                cells[i + 1][j] = true;
                 continue;
             }
             
             if (getCellState({ j, i + 1 }) == 1) {
                 if (getCellState({ j + 1, i + 1 }) == 0) {
-                    newCells[i + 1][j + 1] = true;
+                    cells[i][j] = false;
+                    cells[i + 1][j + 1] = true;
                 }
                 else if (getCellState({ j - 1, i + 1 }) == 0) {
-                    newCells[i + 1][j - 1] = true;
-                }
-                else {
-                    newCells[i][j] = true;
+                    cells[i][j] = false;
+                    cells[i + 1][j - 1] = true;
                 }
             }
         }
     }
 
-    for (int i = 0; i < height; i++) {
-        delete[] cells[i];
-    }
-    delete[] cells;
+    //for (int i = 0; i < height; i++) {
+    //    delete[] cells[i];
+    //}
+    //delete[] cells;
 
-    cells = newCells;
+    //cells = newCells;
 }
 
 void CellAuto::display(Screen& screen) {

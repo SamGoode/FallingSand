@@ -19,8 +19,8 @@ int main() {
 
     GetCurrentConsoleFontEx(hout, false, &cfi);
 
-    cfi.dwFontSize.Y = 20;
-    cfi.dwFontSize.X = 11;
+    cfi.dwFontSize.Y = 16;
+    cfi.dwFontSize.X = 9;
 
     SetCurrentConsoleFontEx(hout, false, &cfi);
 
@@ -42,6 +42,7 @@ int main() {
 
     int mouseX = 0;
     int mouseY = 0;
+    bool mousePressed = false;
 
     CellAuto cellAuto = CellAuto(50, 5, 60, 40);
 
@@ -57,8 +58,8 @@ int main() {
                 switch (inputRecord.Event.KeyEvent.wVirtualKeyCode) {
                 case VK_SPACE:
                     if (inputRecord.Event.KeyEvent.bKeyDown) {
-                        cellAuto.updateCells();
-                        steps++;
+                        //cellAuto.updateCells();
+                        //steps++;
                     }
                     break;
                 }
@@ -69,10 +70,19 @@ int main() {
                 mouseY = inputRecord.Event.MouseEvent.dwMousePosition.Y;
 
                 if (inputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED) {
-                    cellAuto.toggleCell(cellAuto.getMouseGridPos(mouseX, mouseY));
+                    //cellAuto.toggleCell(cellAuto.getMouseGridPos(mouseX, mouseY));
+                    mousePressed = true;
+                }
+                else {
+                    mousePressed = false;
                 }
                 break;
             }
+        }
+
+        if (mousePressed) {
+            steps++;
+            cellAuto.toggleCell(cellAuto.getMouseGridPos(mouseX, mouseY));
         }
 
         screen.reset();
@@ -91,6 +101,8 @@ int main() {
         screen.text("Hovered cell neighbours alive: " + std::to_string(cellAuto.getNeighboursAlive(cellAuto.getMouseGridPos(mouseX, mouseY))), 2, 8);
 
         screen.print();
+
+        cellAuto.updateCells();
 
         Sleep(1000 / tickrate);
     }
