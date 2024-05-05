@@ -97,23 +97,6 @@ int CellAuto::getCellState(pos gridPos) {
     return cells[gridPos.y][gridPos.x];
 }
 
-int CellAuto::getNeighboursAlive(pos gridPos) {
-    int neighboursAlive = 0;
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            if (i == 1 && j == 1) {
-                continue;
-            }
-
-            if (getCellState({ (gridPos.x - 1) + j, (gridPos.y - 1) + i }) == 1) {
-                neighboursAlive++;
-            }
-        }
-    }
-
-    return neighboursAlive;
-}
-
 //by rewriting the logic here, I can reproduce any kind of cellular automata
 //including falling sand
 void CellAuto::updateCells() {
@@ -151,15 +134,6 @@ void CellAuto::updateCells() {
                     }
                     break;
             }
-
-            //if (getCellState({ j + 1, i + 1 }) == 0) {
-            //    cells[i][j] = false;
-            //    cells[i + 1][j + 1] = true;
-            //}
-            //else if (getCellState({ j - 1, i + 1 }) == 0) {
-            //    cells[i][j] = false;
-            //    cells[i + 1][j - 1] = true;
-            //}
         }
     }
 }
