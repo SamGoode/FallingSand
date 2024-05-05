@@ -48,6 +48,11 @@ int main() {
 
     int steps = 0;
 
+    srand(458656856);
+    int randGen;
+    int count0 = 0;
+    int count1 = 0;
+
     while (true) {
         GetNumberOfConsoleInputEvents(hin, &events);
 
@@ -99,6 +104,21 @@ int main() {
         screen.text("Steps: " + std::to_string(steps), 2, 5);
         screen.text("Hovered cell state: " + std::to_string(cellAuto.getCellState(cellAuto.getMouseGridPos(mouseX, mouseY))), 2, 7);
         screen.text("Hovered cell neighbours alive: " + std::to_string(cellAuto.getNeighboursAlive(cellAuto.getMouseGridPos(mouseX, mouseY))), 2, 8);
+
+        randGen = rand() / (RAND_MAX / 2);
+        screen.text("rand gen: " +  std::to_string(randGen), 2, 10);
+
+        switch (randGen) {
+            case 0:
+                count0++;
+                break;
+            case 1:
+                count1++;
+                break;
+        }
+
+        screen.text("0 count: " + std::to_string(count0), 2, 11);
+        screen.text("1 count: " + std::to_string(count1), 2, 12);
 
         screen.print();
 

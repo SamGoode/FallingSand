@@ -117,35 +117,9 @@ int CellAuto::getNeighboursAlive(pos gridPos) {
 //by rewriting the logic here, I can reproduce any kind of cellular automata
 //including falling sand
 void CellAuto::updateCells() {
-    //bool** newCells;
-    //newCells = new bool* [height];
-    //for (int i = 0; i < height; i++) {
-    //    newCells[i] = new bool[width];
-    //    for (int j = 0; j < width; j++) {
-    //        newCells[i][j] = false;
-    //    }
-    //}
-
     for (int i = height - 1; i >= 0; i--) {
         for (int j = 0; j < width; j++) {
             if (!cells[i][j]) {
-                continue;
-            }
-
-            //switch (getCellState({ j, i + 1 })) {
-            //    case -1:
-            //        newCells[i][j] = true;
-            //        break;
-            //    case 0:
-            //        newCells[i + 1][j] = true;
-            //        break;
-            //    case 1:
-            //        newCells[i][j] = true;
-            //        break;
-            //}
-
-            if (getCellState({ j, i + 1 }) == -1) {
-                //cells[i][j] = true;
                 continue;
             }
             
@@ -155,25 +129,39 @@ void CellAuto::updateCells() {
                 continue;
             }
             
-            if (getCellState({ j, i + 1 }) == 1) {
-                if (getCellState({ j + 1, i + 1 }) == 0) {
-                    cells[i][j] = false;
-                    cells[i + 1][j + 1] = true;
-                }
-                else if (getCellState({ j - 1, i + 1 }) == 0) {
-                    cells[i][j] = false;
-                    cells[i + 1][j - 1] = true;
-                }
+            switch (rand() / (RAND_MAX / 2)) {
+                case 0:
+                    if (getCellState({ j - 1, i + 1 }) == 0) {
+                        cells[i][j] = false;
+                        cells[i + 1][j - 1] = true;
+                    }
+                    else if (getCellState({ j + 1, i + 1 }) == 0) {
+                        cells[i][j] = false;
+                        cells[i + 1][j + 1] = true;
+                    }
+                    break;
+                case 1:
+                    if (getCellState({ j + 1, i + 1 }) == 0) {
+                        cells[i][j] = false;
+                        cells[i + 1][j + 1] = true;
+                    }
+                    else if (getCellState({ j - 1, i + 1 }) == 0) {
+                        cells[i][j] = false;
+                        cells[i + 1][j - 1] = true;
+                    }
+                    break;
             }
+
+            //if (getCellState({ j + 1, i + 1 }) == 0) {
+            //    cells[i][j] = false;
+            //    cells[i + 1][j + 1] = true;
+            //}
+            //else if (getCellState({ j - 1, i + 1 }) == 0) {
+            //    cells[i][j] = false;
+            //    cells[i + 1][j - 1] = true;
+            //}
         }
     }
-
-    //for (int i = 0; i < height; i++) {
-    //    delete[] cells[i];
-    //}
-    //delete[] cells;
-
-    //cells = newCells;
 }
 
 void CellAuto::display(Screen& screen) {
