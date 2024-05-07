@@ -14,8 +14,8 @@ int main() {
     SetConsoleMode(hout, consoleMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
     SetConsoleMode(hin, ENABLE_EXTENDED_FLAGS | ENABLE_PROCESSED_INPUT | ENABLE_MOUSE_INPUT);
 
-    SHORT width = 200;
-    SHORT height = 50;
+    SHORT width = 400;
+    SHORT height = 100;
 
     SetConsoleScreenBufferSize(hout, { width, height });
 
@@ -24,8 +24,8 @@ int main() {
 
     GetCurrentConsoleFontEx(hout, false, &cfi);
 
-    cfi.dwFontSize.Y = 20;
-    cfi.dwFontSize.X = 11;
+    cfi.dwFontSize.Y = 8;
+    cfi.dwFontSize.X = 4;
 
     SetCurrentConsoleFontEx(hout, false, &cfi);
 
@@ -46,13 +46,13 @@ int main() {
     Screen screen = Screen(width, height);
 
     //game ticks per second
-    int tickrate = 40;
+    int tickrate = 100;
 
     int mouseX = 0;
     int mouseY = 0;
     bool mousePressed = false;
 
-    CellAuto cellAuto = CellAuto(50, 5, 60, 40);
+    CellAuto cellAuto = CellAuto(50, 10, 150, 80);
 
     srand(449139516);
 
